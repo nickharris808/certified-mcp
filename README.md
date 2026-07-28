@@ -1,10 +1,11 @@
 # certified-mcp
 
+[![ci](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml)
 ![license](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![mcp](https://img.shields.io/badge/MCP-stdio%20%7C%208%20tools-8A2BE2)
 ![tests](https://img.shields.io/badge/tests-21%20passing-brightgreen)
-![status](https://img.shields.io/badge/status-pre--release-orange)
+[![ci](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml)
 
 **Give your agent something it cannot talk its way past.**
 
@@ -96,3 +97,27 @@ should.
 ## Licence
 
 Apache-2.0.
+
+---
+
+## The rest of the toolkit
+
+One idea, six pieces: **a recorded verdict is a claim to be checked, never an input to be trusted.**
+
+| | |
+|---|---|
+| [**lcert-verify**](https://github.com/nickharris808/lcert-verify) | Re-derive a manufacturing certificate's verdict. Stdlib only. |
+| [**equiv-receipt**](https://github.com/nickharris808/equiv-receipt) | Prove two circuits equivalent, with a receipt anyone can re-check. |
+| [**prereg-seal**](https://github.com/nickharris808/prereg-seal) | Seal acceptance criteria before you measure. |
+| [**cert-atlas**](https://github.com/nickharris808/cert-atlas) | 21 labelled forgeries and a metric no degenerate verifier can win. |
+| [**certified-mcp**](https://github.com/nickharris808/certified-mcp) | The above, as tools your AI agent can call. |
+| [**lcert-verify-web**](https://github.com/nickharris808/lcert-verify-web) | The verifier in a browser. Nothing uploaded. |
+
+**Try it now, no install:** [🔏 the verifier Space](https://huggingface.co/spaces/nickh007/cert-verifier) ·
+**Browse the forgeries:** [📊 the atlas dataset](https://huggingface.co/datasets/nickh007/cert-atlas)
+
+### Where the free edition stops
+
+Everything here **checks**. None of it **produces** a certificate that is physically meaningful —
+that needs sound enclosures over real process models, which is a separate commercial product. If
+you need certificates rather than a way to check them, that is the conversation to have.
