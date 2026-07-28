@@ -5,7 +5,6 @@
 ![python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![mcp](https://img.shields.io/badge/MCP-stdio%20%7C%208%20tools-8A2BE2)
 ![tests](https://img.shields.io/badge/tests-21%20passing-brightgreen)
-[![ci](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml)
 
 **Give your agent something it cannot talk its way past.**
 
