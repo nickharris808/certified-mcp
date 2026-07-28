@@ -22,3 +22,21 @@ pytest
 
 `test_stdio_roundtrip` exercises the real transport. If you touch the protocol layer, also run the
 server against a real MCP client before submitting.
+
+## Installing for development
+
+Dependencies use PEP 508 **direct references** to the public GitHub repositories, so
+`pip install ./<pkg>` works for anyone today without anything being on PyPI.
+
+That has one consequence worth knowing: you cannot install every package from local
+paths in a single command, because pip sees the direct reference and the local path as
+two different sources for the same name. Install the leaf packages first, then the
+dependents with `--no-deps`:
+
+```
+pip install -e ./lcert-verify -e ./equiv-receipt -e ./prereg-seal
+pip install --no-deps -e ./cert-atlas -e ./certified-mcp
+```
+
+For a future PyPI release the direct references become plain version specifiers and this
+step disappears. That swap is deliberately not on the critical path.

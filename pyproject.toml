@@ -16,7 +16,19 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Intended Audience :: Developers",
 ]
-dependencies = ["lcert-verify>=1.0.0", "equiv-receipt>=1.0.0", "prereg-seal>=1.0.0", "cert-atlas>=1.0.0"]
+# Dependencies use PEP 508 direct references so `pip install ./certified-mcp` works
+# for anyone, today, with nothing published to a package index. They resolve from
+# the public GitHub repositories.
+#
+# For a future PyPI release these become plain version specifiers
+# ("lcert-verify>=1.0.0", ...) — PyPI rejects direct references. That swap is a
+# one-line change at release time and is deliberately NOT on the critical path.
+dependencies = [
+    "lcert-verify @ git+https://github.com/nickharris808/lcert-verify.git@main",
+    "equiv-receipt @ git+https://github.com/nickharris808/equiv-receipt.git@main",
+    "prereg-seal @ git+https://github.com/nickharris808/prereg-seal.git@main",
+    "cert-atlas @ git+https://github.com/nickharris808/cert-atlas.git@main",
+]
 
 [project.optional-dependencies]
 test = ["pytest>=7.0"]
