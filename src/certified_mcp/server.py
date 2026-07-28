@@ -69,6 +69,26 @@ def _verify_certificate(args: dict):
     return {k: v for k, v in res.items() if k != "rows"}
 
 
+@tool("explain_certificate",
+      "Explain WHY a certificate reached its verdict, locus by locus: which loci are safe, "
+      "unsafe or straddling, the margin each had, the margin it needed, and how far short it "
+      "fell. Use this after verify_certificate returns REFUTED or a certificate records a "
+      "REJECT — it turns an opaque refusal into a specific, actionable list. Computes nothing "
+      "new; it re-presents the arithmetic the verdict already rests on.",
+      {"type": "object",
+       "properties": {"bundle_dir": {"type": "string"},
+                      "limit": {"type": "integer", "default": 10,
+                                "description": "how many binding loci to list"}},
+       "required": ["bundle_dir"]})
+def _explain_certificate(args: dict):
+    import json as _json
+    from pathlib import Path as _Path
+    from lcert_verify.explain import explain_certificate
+    b = _json.loads((_Path(args["bundle_dir"]) / "bundle.json").read_text())
+    lim = int(args.get("limit", 10))
+    return [explain_certificate(c, limit=lim) for c in b.get("gate_certs", [])]
+
+
 @tool("verify_receipt",
       "Verify a logic-equivalence receipt. Re-runs the DRAT proof check (or re-simulates the "
       "counterexample) over the committed formula, and recomputes the hash chain. The verdict is "

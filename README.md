@@ -97,6 +97,15 @@ should.
 
 Apache-2.0.
 
+## Honest scope — what these tools prove, and what they do not
+
+| Question | Answer |
+|---|---|
+| Can an agent check a certificate, proof or seal with these? | **Yes**, all locally and read-only. |
+| Does `verify_certificate` returning `UNVERIFIED` mean the certificate is bad? | **No.** It means the tool abstained for want of a trust anchor. An agent must not report it as either pass or fail. |
+| Can any tool here *produce* a certificate? | **No** — enforced by a test. These are checkers. |
+| Does anything here validate physics? | **Never.** |
+
 ---
 
 ## The rest of the toolkit
