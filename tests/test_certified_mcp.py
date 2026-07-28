@@ -69,13 +69,19 @@ def test_verify_certificate_accepts_and_rejects(tmp_path):
     c = L.gate_cert("x", budget=0.05, safety=1.5, n_photons=100.0, thr=0.30,
                     delta_dose=0.02, loci=[(0.10, 0.11, 0.05)])
     L.make_bundle(d, gate_certs=[c], kpis=[], prereg={})
-    out, _ = call("verify_certificate", {"bundle_dir": str(d)})
+    out, _ = call("verify_certificate",
+                  {"bundle_dir": str(d), "expected_sha256": L.bundle_fingerprint(d)})
     assert out["ok"] is True and out["n_certificates"] == 1
+    assert out["verdict"] == "VERIFIED"
+
+    # ...and without the anchor it abstains rather than passing
+    out2, _ = call("verify_certificate", {"bundle_dir": str(d)})
+    assert out2["verdict"] == "UNVERIFIED" and out2["ok"] is False
 
     b = json.loads((d / "bundle.json").read_text())
     b["gate_certs"][0]["recorded"]["interval_admit"] = False
     (d / "bundle.json").write_bytes(V._canon(b) + b"\n")
-    out, _ = call("verify_certificate", {"bundle_dir": str(d)})
+    out, _ = call("verify_certificate", {"bundle_dir": str(d), "expected_sha256": "ab" * 32})
     assert out["ok"] is False
 
 
@@ -83,9 +89,11 @@ def test_verify_certificate_refuses_vacuous_bundle(tmp_path):
     import lcert_verify as L
     d = tmp_path / "empty"
     L.make_bundle(d, gate_certs=[], kpis=[], prereg={})
-    out, _ = call("verify_certificate", {"bundle_dir": str(d)})
-    assert out["ok"] is False
-    out, _ = call("verify_certificate", {"bundle_dir": str(d), "allow_empty": True})
+    fp = L.bundle_fingerprint(d)
+    out, _ = call("verify_certificate", {"bundle_dir": str(d), "expected_sha256": fp})
+    assert out["ok"] is False and out["verdict"] == "VACUOUS"
+    out, _ = call("verify_certificate",
+                  {"bundle_dir": str(d), "expected_sha256": fp, "allow_empty": True})
     assert out["ok"] is True
 
 

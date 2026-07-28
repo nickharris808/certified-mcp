@@ -44,20 +44,28 @@ def _str(o) -> str:
 
 @tool("verify_certificate",
       "Verify a manufacturing certificate bundle. Re-derives the admission verdict from the "
-      "certificate's own numbers rather than reading it, and checks integrity. Returns ok, "
-      "the errors, the number of certificates checked, and the bundle fingerprint. Refuses a "
-      "bundle that certifies nothing unless allow_empty is set.",
+      "certificate's own numbers rather than reading it, and checks integrity. Returns a "
+      "verdict: VERIFIED, REFUTED, VACUOUS, or UNVERIFIED. IMPORTANT: without an "
+      "expected_sha256 (a fingerprint obtained OUT OF BAND, not from the bundle itself) the "
+      "verdict is UNVERIFIED — the tool abstains, because internal consistency alone cannot "
+      "rule out a forgery whose inputs and verdict were edited together. UNVERIFIED means "
+      "'cannot tell', NOT 'the certificate is bad'. Do not report it as either pass or fail.",
       {"type": "object",
        "properties": {
            "bundle_dir": {"type": "string", "description": "Path to the bundle directory."},
            "expected_sha256": {"type": "string",
-                               "description": "Optional out-of-band fingerprint to enforce."},
-           "allow_empty": {"type": "boolean", "default": False}},
+                               "description": "The out-of-band fingerprint — the trust anchor. "
+                                              "Without it the tool abstains."},
+           "allow_empty": {"type": "boolean", "default": False},
+           "accept_without_anchor": {
+               "type": "boolean", "default": False,
+               "description": "Accept the weaker internal-consistency check on purpose."}},
        "required": ["bundle_dir"]})
 def _verify_certificate(args: dict):
     import lcert_verify as L
     res = L.verify_bundle(args["bundle_dir"], args.get("expected_sha256", ""),
-                          require_certs=not args.get("allow_empty", False))
+                          require_certs=not args.get("allow_empty", False),
+                          require_anchor=not args.get("accept_without_anchor", False))
     return {k: v for k, v in res.items() if k != "rows"}
 
 
