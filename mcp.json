@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "certified": {
+      "command": "certified-mcp",
+      "args": [],
+      "env": {}
+    }
+  }
+}
