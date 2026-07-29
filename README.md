@@ -3,7 +3,7 @@
 [![ci](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/nickharris808/certified-mcp/actions/workflows/ci.yml)
 ![license](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![python](https://img.shields.io/badge/python-3.9+-blue)
-![tests](https://img.shields.io/badge/tests-21%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-21%20tests-blue)
 ![mcp](https://img.shields.io/badge/mcp-stdio%20%7C%208%20tools-8A2BE2)
 
 **Give your agent something it cannot talk its way past.**
