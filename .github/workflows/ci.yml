@@ -36,3 +36,21 @@ jobs:
           python-version: "3.12"
       - run: pip install --quiet ruff
       - run: ruff check .
+
+  docs:
+    name: badges are current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # The badge count is derived by importing and counting @tool decorators, and the test badge
+      # by collecting the suite, so the package has to be importable first.
+      - run: pip install -e ".[test]"
+      # This repository shipped `mcp-stdio | 8 tools` while server.py registered 9 -- the badge was
+      # the one number in refresh_badges.py that was typed rather than derived, and this was the
+      # repository with no --check step to catch it. Adding the step used to be impossible: the
+      # earlier _mcp_tool_count() took the tree root and crashed with "no such file" under
+      # --single. That signature is fixed, so the guard can finally exist here.
+      - run: python refresh_badges.py certified-mcp --single certified-mcp --check

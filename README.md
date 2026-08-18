@@ -4,7 +4,7 @@
 ![license](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![python](https://img.shields.io/badge/python-3.9+-blue)
 ![tests](https://img.shields.io/badge/tests-21%20tests-blue)
-![mcp](https://img.shields.io/badge/mcp-stdio%20%7C%208%20tools-8A2BE2)
+![mcp](https://img.shields.io/badge/mcp-stdio%20%7C%209%20tools-8A2BE2)
 
 **Give your agent something it cannot talk its way past.**
 
@@ -15,15 +15,13 @@ asserted about it.
 
 ## Install
 
-> **Status: pre-release.** Not yet on PyPI. Until then, install from a checkout:
->
-> ```
-> pip install ./lcert-verify ./equiv-receipt ./prereg-seal ./cert-atlas ./certified-mcp
-> ```
+```
+pip install "certified-mcp @ git+https://github.com/nickharris808/certified-mcp.git@main"
+```
 
-```
-pip install certified-mcp
-```
+**Not on PyPI yet.** The name `certified-mcp` is unregistered, so `pip install certified-mcp` installs nothing today — use the line above, which installs exactly the same code. When the package is published this note goes and the plain name works.
+
+Its four dependencies are declared as git references, so that one line pulls them too.
 
 ## 30-second quickstart
 
@@ -59,6 +57,7 @@ The agent gets a concrete failing input, not "this appears correct."
 | Tool | What it does |
 |---|---|
 | `verify_certificate` | Re-derives a manufacturing admission verdict from the certificate's own numbers; checks integrity; refuses a bundle that certifies nothing |
+| `explain_certificate` | Turns a REFUTED/REJECT verdict into a specific list: which loci are safe, unsafe or straddling, the margin each had, the margin it needed, and how far short it fell. Computes nothing new — it re-presents the arithmetic the verdict already rests on |
 | `verify_receipt` | Re-runs a DRAT proof (or re-simulates a counterexample) over the committed formula |
 | `prove_equivalence` | Proves two small combinational circuits equivalent, or returns a differing input |
 | `check_drat` | Checks a DRAT refutation from **any** solver; names the first lemma that doesn't follow |
@@ -119,7 +118,7 @@ The whole story, and the objections answered, live at **[certified-oss](https://
 | [**lcert-verify**](https://github.com/nickharris808/lcert-verify) | Re-derive a manufacturing certificate's verdict. Stdlib only. |
 | [**equiv-receipt**](https://github.com/nickharris808/equiv-receipt) | Prove two circuits equivalent, with a receipt anyone can re-check. |
 | [**prereg-seal**](https://github.com/nickharris808/prereg-seal) | Seal acceptance criteria before you measure. |
-| [**cert-atlas**](https://github.com/nickharris808/cert-atlas) | 21 labelled forgeries and a metric no degenerate verifier can win. |
+| [**cert-atlas**](https://github.com/nickharris808/cert-atlas) | 28 labelled forgeries and a metric no degenerate verifier can win. |
 | [**certified-mcp**](https://github.com/nickharris808/certified-mcp) | The above, as tools your AI agent can call. |
 | [**lcert-verify-web**](https://github.com/nickharris808/lcert-verify-web) | The verifier in a browser. Nothing uploaded. |
 
